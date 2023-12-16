@@ -11,6 +11,10 @@
 		C76CDFB02B2A77F800523216 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFAF2B2A77F800523216 /* ContentView.swift */; };
 		C76CDFB22B2A77FA00523216 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C76CDFB12B2A77FA00523216 /* Assets.xcassets */; };
 		C76CDFB52B2A77FA00523216 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C76CDFB42B2A77FA00523216 /* Preview Assets.xcassets */; };
+		C76CDFBE2B2A7B1B00523216 /* Monitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFBD2B2A7B1B00523216 /* Monitor.swift */; };
+		C76CDFC12B2A7C1500523216 /* Webservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFC02B2A7C1500523216 /* Webservice.swift */; };
+		C76CDFC42B2CC2B400523216 /* MonitorlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFC32B2CC2B400523216 /* MonitorlistViewModel.swift */; };
+		C76CDFC72B2CC31500523216 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFC62B2CC31500523216 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +24,10 @@
 		C76CDFB12B2A77FA00523216 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C76CDFB42B2A77FA00523216 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C76CDFB62B2A77FA00523216 /* datadog_monitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = datadog_monitor.entitlements; sourceTree = "<group>"; };
+		C76CDFBD2B2A7B1B00523216 /* Monitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monitor.swift; sourceTree = "<group>"; };
+		C76CDFC02B2A7C1500523216 /* Webservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Webservice.swift; sourceTree = "<group>"; };
+		C76CDFC32B2CC2B400523216 /* MonitorlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorlistViewModel.swift; sourceTree = "<group>"; };
+		C76CDFC62B2CC31500523216 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +60,10 @@
 		C76CDFAC2B2A77F800523216 /* datadog-monitor */ = {
 			isa = PBXGroup;
 			children = (
+				C76CDFC52B2CC2F000523216 /* Utils */,
+				C76CDFC22B2CC27200523216 /* ViewModels */,
+				C76CDFBF2B2A7BF600523216 /* Services */,
+				C76CDFBC2B2A7ACF00523216 /* Models */,
 				C76CDFAD2B2A77F800523216 /* datadog_monitorApp.swift */,
 				C76CDFAF2B2A77F800523216 /* ContentView.swift */,
 				C76CDFB12B2A77FA00523216 /* Assets.xcassets */,
@@ -67,6 +79,38 @@
 				C76CDFB42B2A77FA00523216 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C76CDFBC2B2A7ACF00523216 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C76CDFBD2B2A7B1B00523216 /* Monitor.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C76CDFBF2B2A7BF600523216 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C76CDFC02B2A7C1500523216 /* Webservice.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		C76CDFC22B2CC27200523216 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C76CDFC32B2CC2B400523216 /* MonitorlistViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C76CDFC52B2CC2F000523216 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				C76CDFC62B2CC31500523216 /* Constants.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,7 +184,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C76CDFB02B2A77F800523216 /* ContentView.swift in Sources */,
+				C76CDFBE2B2A7B1B00523216 /* Monitor.swift in Sources */,
+				C76CDFC12B2A7C1500523216 /* Webservice.swift in Sources */,
 				C76CDFAE2B2A77F800523216 /* datadog_monitorApp.swift in Sources */,
+				C76CDFC42B2CC2B400523216 /* MonitorlistViewModel.swift in Sources */,
+				C76CDFC72B2CC31500523216 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +325,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"datadog-monitor/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "datadog-monitor";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -302,6 +353,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"datadog-monitor/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "datadog-monitor";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

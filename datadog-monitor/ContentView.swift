@@ -8,17 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+    @StateObject private var vm: MonitorListViewModel
+        
+        init(vm: MonitorListViewModel) {
+            self._vm = StateObject(wrappedValue: vm)
         }
-        .padding()
-    }
+        
+        var body: some View {
+            VStack(alignment: .leading) {
+                Text("Monitors").padding()
+                
+                List(vm.monitors, id: \.symbol) { monitor in
+                    HStack(alignment: .center) {
+                        VStack(alignment: .leading) {
+                            
+                            Text(monitor.description)
+                                .opacity(0.4)
+                            Divider()
+                        }
+                       
+                        
+                    }
+                }.task {
+                    await vm.populateMonitors()
+                }
+                
+            }.frame(width: 300, height: 300)
+        }
+    
+    
 }
 
 #Preview {
-    ContentView()
+    ContentView(vm: MonitorListViewModel())
 }
