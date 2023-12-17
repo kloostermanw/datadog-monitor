@@ -94,16 +94,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     }
     
     @objc func showSettings() {
-        let objUserDefaults = UserDefaults(suiteName: "datadog-monitor.kloosterman.eu")
         let appSettings = AppSettings()
-        
-        if objUserDefaults?.value(forKey: "settings") != nil {
-            let arrDirectory = objUserDefaults?.value(forKey: "settings") as! [String : String]
-            appSettings.apiKey = arrDirectory["apiKey"]!
-            appSettings.appKey = arrDirectory["appKey"]!
-            appSettings.url = arrDirectory["url"]!
-            appSettings.interval = arrDirectory["interval"]!
-        }
+        appSettings.getSettings()
         
         self.popoverS = NSPopover()
         self.popoverS.contentSize = NSSize(width: 400, height: 300)

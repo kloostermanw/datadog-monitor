@@ -15,12 +15,20 @@ class MonitorListViewModel: ObservableObject {
     func populateMonitors() async {
         
         do {
-            let monitors = try await Webservice().getMonitors(
-                url: Constants.Urls.latestStocks,
-                ddApiKey: Constants.Urls.ddApiKey,
-                ddAppKey: Constants.Urls.ddAppKey
-            )
-            self.monitors = monitors.map(MonitorViewModel.init)
+            let appSettings = AppSettings()
+            appSettings.getSettings()
+            if (
+                !(appSettings.apiKey ).isEmpty
+                && !(appSettings.appKey ).isEmpty
+                && !(appSettings.url ).isEmpty
+            ) {
+                let monitors = try await Webservice().getMonitors(
+                    url: URL(string: appSettings.url)!,
+                    ddApiKey: appSettings.apiKey,
+                    ddAppKey: appSettings.appKey
+                )
+                self.monitors = monitors.map(MonitorViewModel.init)
+            }
         } catch {
             print(error)
         }
