@@ -15,6 +15,7 @@
 		C76CDFC12B2A7C1500523216 /* Webservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFC02B2A7C1500523216 /* Webservice.swift */; };
 		C76CDFC42B2CC2B400523216 /* MonitorlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFC32B2CC2B400523216 /* MonitorlistViewModel.swift */; };
 		C76CDFC72B2CC31500523216 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFC62B2CC31500523216 /* Constants.swift */; };
+		C76CDFCE2B2E0A0400523216 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFCD2B2E0A0400523216 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		C76CDFC02B2A7C1500523216 /* Webservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Webservice.swift; sourceTree = "<group>"; };
 		C76CDFC32B2CC2B400523216 /* MonitorlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorlistViewModel.swift; sourceTree = "<group>"; };
 		C76CDFC62B2CC31500523216 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C76CDFCD2B2E0A0400523216 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				C76CDFB12B2A77FA00523216 /* Assets.xcassets */,
 				C76CDFB62B2A77FA00523216 /* datadog_monitor.entitlements */,
 				C76CDFB32B2A77FA00523216 /* Preview Content */,
+				C76CDFCD2B2E0A0400523216 /* SettingsView.swift */,
 			);
 			path = "datadog-monitor";
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C76CDFCE2B2E0A0400523216 /* SettingsView.swift in Sources */,
 				C76CDFB02B2A77F800523216 /* ContentView.swift in Sources */,
 				C76CDFBE2B2A7B1B00523216 /* Monitor.swift in Sources */,
 				C76CDFC12B2A7C1500523216 /* Webservice.swift in Sources */,

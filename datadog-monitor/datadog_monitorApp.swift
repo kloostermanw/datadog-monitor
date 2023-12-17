@@ -23,6 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     
     private var statusItem: NSStatusItem!
     private var popover: NSPopover!
+    private var popoverS: NSPopover!
     
     private var monitorListVM: MonitorListViewModel!
     
@@ -49,8 +50,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         statusItem.menu = statusBarMenu
         
         statusBarMenu.addItem(
-            withTitle: "Latest message",
+            withTitle: "Show monitors",
             action: #selector(togglePopover),
+            keyEquivalent: "")
+        
+        statusBarMenu.addItem(
+            withTitle: "Settings",
+            action: #selector(showSettings),
             keyEquivalent: "")
         
         statusBarMenu.addItem(
@@ -59,6 +65,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             keyEquivalent: "")
         
         self.popover = NSPopover()
+        self.popoverS = NSPopover()
         self.popover.contentSize = NSSize(width: 300, height: 300)
         self.popover.behavior = .transient
         self.popover.contentViewController = NSHostingController(rootView: ContentView(vm: self.monitorListVM))
@@ -77,6 +84,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         if let button = statusItem.button {
             if popover.isShown {
                 self.popover.performClose(nil)
+            } else if self.popoverS.isShown{
+                self.popoverS.performClose(nil)
             } else {
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             }
@@ -84,4 +93,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
     }
     
+    @objc func showSettings() {
+        let objUserDefaults = UserDefaults(suiteName: "datadog-monitor.kloosterman.eu")
+        let appSettings = AppSettings()
+        
+        if objUserDefaults?.value(forKey: "settings") != nil {
+            let arrDirectory = objUserDefaults?.value(forKey: "settings") as! [String : String]
+            appSettings.apiKey = arrDirectory["apiKey"]!
+            appSettings.appKey = arrDirectory["appKey"]!
+            appSettings.url = arrDirectory["url"]!
+            appSettings.interval = arrDirectory["interval"]!
+        }
+        
+        self.popoverS = NSPopover()
+        self.popoverS.contentSize = NSSize(width: 400, height: 300)
+        self.popoverS.behavior = .transient
+        self.popoverS.contentViewController = NSHostingController(rootView: SettingsView(appSettings: appSettings))
+        if let button = statusItem.button {
+            if popover.isShown {
+                self.popover.performClose(nil)
+            }
+            self.popoverS.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+        }
+    }
 }
