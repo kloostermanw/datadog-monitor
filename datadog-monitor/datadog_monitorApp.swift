@@ -14,7 +14,7 @@ struct datadog_monitorApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(vm: MonitorListViewModel())
+//            ContentView(vm: MonitorListViewModel())
         }
     }
 }
@@ -33,8 +33,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
-        var statusOK = 9
-        var statusNOK = 0
+        let statusOK = 9
+        let statusNOK = 0
         
         let iconView = NSHostingView(rootView: IconView(statusOK: statusOK, statusNOK: statusNOK))
         iconView.frame = NSRect(x: 0, y: 0, width: 40, height: 22)

@@ -10,8 +10,22 @@ import Foundation
 class monitorJob
 {
     var monitors: [MonitorViewModel] = []
+    var monitorTimer: Timer?
     
-    func update() async -> [Int]
+    
+    func start()
+    {
+        monitorTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+    }
+    
+    func stop()
+    {
+        monitorTimer?.invalidate()
+    }
+    
+    
+    
+    @objc func update() async
     {
         do {
             let appSettings = AppSettings()
@@ -28,17 +42,15 @@ class monitorJob
                 )
                 self.monitors = monitors.map(MonitorViewModel.init)
                 
-                return countStatus()
+                countStatus()
             }
         }
         catch {
             print(error)
         }
-        
-        return [0,0]
     }
                 
-    func countStatus() -> [Int]
+    func countStatus()
     {
         var statusOK: Int = 0
         var statusNOK: Int = 0
@@ -51,6 +63,6 @@ class monitorJob
             }
         }
         
-        return [statusOK, statusNOK]
+        print([statusOK, statusNOK])
     }
 }
