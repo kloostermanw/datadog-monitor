@@ -1,20 +1,18 @@
 //
-//  DataDoglistViewModel.swift
+//  monitorJob.swift
 //  datadog-monitor
 //
-//  Created by Wiebe on 12/15/23.
+//  Created by Wiebe on 12/17/23.
 //
 
 import Foundation
-import AppKit
 
-@MainActor
-class MonitorListViewModel: ObservableObject {
+class monitorJob
+{
+    var monitors: [MonitorViewModel] = []
     
-    @Published var monitors: [MonitorViewModel] = []
-    
-    func populateMonitors() async {
-        
+    func update() async -> [Int]
+    {
         do {
             let appSettings = AppSettings()
             appSettings.getSettings()
@@ -30,30 +28,29 @@ class MonitorListViewModel: ObservableObject {
                 )
                 self.monitors = monitors.map(MonitorViewModel.init)
                 
+                return countStatus()
             }
-        } catch {
+        }
+        catch {
             print(error)
         }
+        
+        return [0,0]
     }
-}
-
-struct MonitorViewModel {
-    
-    public var monitor: Monitor
-    
-    init(monitor: Monitor) {
-        self.monitor = monitor
-    }
-    
-    var symbol: Int {
-        monitor.id
-    }
-    
-    var price: String {
-        monitor.overall_state
-    }
-    
-    var description: String {
-        monitor.name
+                
+    func countStatus() -> [Int]
+    {
+        var statusOK: Int = 0
+        var statusNOK: Int = 0
+        
+        for monitor in self.monitors {
+            if (monitor.monitor.overall_state == "OK") {
+                statusOK += 1
+            } else {
+                statusNOK += 1
+            }
+        }
+        
+        return [statusOK, statusNOK]
     }
 }

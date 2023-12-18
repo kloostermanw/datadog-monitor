@@ -16,6 +16,8 @@
 		C76CDFC42B2CC2B400523216 /* MonitorlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFC32B2CC2B400523216 /* MonitorlistViewModel.swift */; };
 		C76CDFC72B2CC31500523216 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFC62B2CC31500523216 /* AppSettings.swift */; };
 		C76CDFCE2B2E0A0400523216 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFCD2B2E0A0400523216 /* SettingsView.swift */; };
+		C76CDFD02B2FAC3400523216 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFCF2B2FAC3400523216 /* IconView.swift */; };
+		C76CDFD22B2FB9CF00523216 /* monitorJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76CDFD12B2FB9CF00523216 /* monitorJob.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		C76CDFC32B2CC2B400523216 /* MonitorlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorlistViewModel.swift; sourceTree = "<group>"; };
 		C76CDFC62B2CC31500523216 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		C76CDFCD2B2E0A0400523216 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C76CDFCF2B2FAC3400523216 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
+		C76CDFD12B2FB9CF00523216 /* monitorJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monitorJob.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,7 @@
 				C76CDFB62B2A77FA00523216 /* datadog_monitor.entitlements */,
 				C76CDFB32B2A77FA00523216 /* Preview Content */,
 				C76CDFCD2B2E0A0400523216 /* SettingsView.swift */,
+				C76CDFCF2B2FAC3400523216 /* IconView.swift */,
 			);
 			path = "datadog-monitor";
 			sourceTree = "<group>";
@@ -96,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				C76CDFC02B2A7C1500523216 /* Webservice.swift */,
+				C76CDFD12B2FB9CF00523216 /* monitorJob.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -187,10 +193,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C76CDFCE2B2E0A0400523216 /* SettingsView.swift in Sources */,
+				C76CDFD22B2FB9CF00523216 /* monitorJob.swift in Sources */,
 				C76CDFB02B2A77F800523216 /* ContentView.swift in Sources */,
 				C76CDFBE2B2A7B1B00523216 /* Monitor.swift in Sources */,
 				C76CDFC12B2A7C1500523216 /* Webservice.swift in Sources */,
 				C76CDFAE2B2A77F800523216 /* datadog_monitorApp.swift in Sources */,
+				C76CDFD02B2FAC3400523216 /* IconView.swift in Sources */,
 				C76CDFC42B2CC2B400523216 /* MonitorlistViewModel.swift in Sources */,
 				C76CDFC72B2CC31500523216 /* AppSettings.swift in Sources */,
 			);

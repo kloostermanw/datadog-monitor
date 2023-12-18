@@ -33,18 +33,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
-        let myString = "10"
-        let myAttribute = [ NSAttributedString.Key.foregroundColor: NSColor.green ]
-        let myAttrString = NSAttributedString(string: myString, attributes: myAttribute)
-
+        var statusOK = 9
+        var statusNOK = 0
         
-        if let statusButton = statusItem.button {
-            statusButton.image = NSImage(systemSymbolName: "chart.line.uptrend.xyaxis.circle", accessibilityDescription: "Chart Line")
-            statusButton.action = #selector(togglePopover)
-            statusButton.attributedTitle = myAttrString
-        }
-        
+        let iconView = NSHostingView(rootView: IconView(statusOK: statusOK, statusNOK: statusNOK))
+        iconView.frame = NSRect(x: 0, y: 0, width: 40, height: 22)
 
+        statusItem.button?.addSubview(iconView)
+        statusItem.button?.frame = iconView.frame
         
         let statusBarMenu = NSMenu(title: "Cap Status Bar Menu")
         statusItem.menu = statusBarMenu
