@@ -33,15 +33,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
-        let statusOK = 9
-        let statusNOK = 0
-        
-        let iconView = NSHostingView(rootView: IconView(statusOK: statusOK, statusNOK: statusNOK))
-        iconView.frame = NSRect(x: 0, y: 0, width: 40, height: 22)
-
-        statusItem.button?.addSubview(iconView)
-        statusItem.button?.frame = iconView.frame
-        
+        monitorJob(statusItem: statusItem).start()
+                
         let statusBarMenu = NSMenu(title: "Cap Status Bar Menu")
         statusItem.menu = statusBarMenu
         
@@ -72,11 +65,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     }
     
     @objc func togglePopover() {
-        
-//        Task {
-//            await self.monitorListVM.populateMonitors
-//        }
-        
+                
         if let button = statusItem.button {
             if popover.isShown {
                 self.popover.performClose(nil)

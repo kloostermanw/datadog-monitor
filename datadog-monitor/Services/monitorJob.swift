@@ -7,25 +7,51 @@
 
 import Foundation
 
+import SwiftUI
+
 class monitorJob
 {
+    private var statusItem: NSStatusItem
     var monitors: [MonitorViewModel] = []
     var monitorTimer: Timer?
+    var run: Bool = true
+    var result: Array<Any> = []
+    @State var statusOK: Int = 0
+    @State var statusNOK: Int = 0
     
-    
-    func start()
-    {
-        monitorTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+    init(statusItem: NSStatusItem) {
+        self.statusItem = statusItem
+
+        let iconView = NSHostingView(rootView: IconView(statusOK: statusOK, statusNOK: statusNOK))
+        iconView.frame = NSRect(x: 0, y: 0, width: 40, height: 22)
+
+        statusItem.button?.addSubview(iconView)
+        statusItem.button?.frame = iconView.frame
+        
     }
     
-    func stop()
-    {
-        monitorTimer?.invalidate()
+    func start() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
+                doRegularWork()
+            if run {
+                start()
+            }
+        }
     }
     
+    func stop() {
+        run = false
+    }
     
+    func doRegularWork() {
+        Task {
+            result = await update()
+            print("-----> callFunc")
+            print(result)
+        }
+    }
     
-    @objc func update() async
+    func update() async -> Array<Int>
     {
         do {
             let appSettings = AppSettings()
@@ -42,27 +68,32 @@ class monitorJob
                 )
                 self.monitors = monitors.map(MonitorViewModel.init)
                 
-                countStatus()
+                return countStatus()
             }
         }
         catch {
             print(error)
         }
+        
+        return [0,0]
     }
                 
-    func countStatus()
+    func countStatus() -> Array<Int>
     {
-        var statusOK: Int = 0
-        var statusNOK: Int = 0
+        var OK: Int = 0
+        var NOK: Int = 0
         
         for monitor in self.monitors {
             if (monitor.monitor.overall_state == "OK") {
-                statusOK += 1
+                OK += 1
             } else {
-                statusNOK += 1
+                NOK += 1
             }
         }
         
-        print([statusOK, statusNOK])
+        statusOK = OK
+        statusNOK = NOK
+        
+        return [OK, NOK]
     }
 }
