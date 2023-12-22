@@ -8,6 +8,17 @@
 import Foundation
 
 import SwiftUI
+import Observation
+
+@Observable class StatusData {
+    var ok: Int = 0
+    var nok: Int = 0
+    
+    init(ok: Int, nok: Int) {
+        self.ok = ok
+        self.nok = nok
+    }
+}
 
 class monitorJob
 {
@@ -16,13 +27,14 @@ class monitorJob
     var monitorTimer: Timer?
     var run: Bool = true
     var result: Array<Any> = []
-    @State var statusOK: Int = 0
-    @State var statusNOK: Int = 0
+    var statusOK: Int = 0
+    var statusNOK: Int = 0
+    var statusData = StatusData(ok: 1, nok: 1)
     
     init(statusItem: NSStatusItem) {
         self.statusItem = statusItem
 
-        let iconView = NSHostingView(rootView: IconView(statusOK: statusOK, statusNOK: statusNOK))
+        let iconView = NSHostingView(rootView: IconView(statusData: statusData))
         iconView.frame = NSRect(x: 0, y: 0, width: 40, height: 22)
 
         statusItem.button?.addSubview(iconView)
@@ -31,7 +43,7 @@ class monitorJob
     }
     
     func start() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 60) { [self] in
                 doRegularWork()
             if run {
                 start()
@@ -91,8 +103,8 @@ class monitorJob
             }
         }
         
-        statusOK = OK
-        statusNOK = NOK
+        statusData.ok = OK
+        statusData.nok = NOK
         
         return [OK, NOK]
     }

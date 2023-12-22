@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct IconView: View {
-    var statusOK: Int
-    var statusNOK: Int
+    var statusData: StatusData
     
     var body: some View {
         ZStack {
             
             HStack(spacing: 2) {
-                Text(String(statusOK))
+                Text(String(statusData.ok))
                     .frame(width: 20,height: 20)
                     .background(Color.green)
-                Text(String(statusNOK))
+                Text(String(statusData.nok))
                     .frame(width: 20,height: 20)
                     .background(Color.red)
             }
@@ -27,5 +26,5 @@ struct IconView: View {
 }
 
 #Preview {
-    IconView(statusOK: 10, statusNOK: 0)
+    IconView(statusData: StatusData(ok: 0, nok: 0))
 }

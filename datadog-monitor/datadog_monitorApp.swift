@@ -33,7 +33,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
-        monitorJob(statusItem: statusItem).start()
+        let Job = monitorJob(statusItem: statusItem)
+        Job.doRegularWork()
+        Job.start()
                 
         let statusBarMenu = NSMenu(title: "Cap Status Bar Menu")
         statusItem.menu = statusBarMenu

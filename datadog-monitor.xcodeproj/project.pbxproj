@@ -34,6 +34,7 @@
 		C76CDFCD2B2E0A0400523216 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C76CDFCF2B2FAC3400523216 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		C76CDFD12B2FB9CF00523216 /* monitorJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monitorJob.swift; sourceTree = "<group>"; };
+		C7DE1BEF2B3610D000C42CC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,17 +67,16 @@
 		C76CDFAC2B2A77F800523216 /* datadog-monitor */ = {
 			isa = PBXGroup;
 			children = (
+				C7DE1BEF2B3610D000C42CC8 /* Info.plist */,
+				C7DE1BEE2B360F0400C42CC8 /* Views */,
 				C76CDFC52B2CC2F000523216 /* Utils */,
 				C76CDFC22B2CC27200523216 /* ViewModels */,
 				C76CDFBF2B2A7BF600523216 /* Services */,
 				C76CDFBC2B2A7ACF00523216 /* Models */,
 				C76CDFAD2B2A77F800523216 /* datadog_monitorApp.swift */,
-				C76CDFAF2B2A77F800523216 /* ContentView.swift */,
 				C76CDFB12B2A77FA00523216 /* Assets.xcassets */,
 				C76CDFB62B2A77FA00523216 /* datadog_monitor.entitlements */,
 				C76CDFB32B2A77FA00523216 /* Preview Content */,
-				C76CDFCD2B2E0A0400523216 /* SettingsView.swift */,
-				C76CDFCF2B2FAC3400523216 /* IconView.swift */,
 			);
 			path = "datadog-monitor";
 			sourceTree = "<group>";
@@ -120,6 +120,16 @@
 				C76CDFC62B2CC31500523216 /* AppSettings.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		C7DE1BEE2B360F0400C42CC8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C76CDFCF2B2FAC3400523216 /* IconView.swift */,
+				C76CDFCD2B2E0A0400523216 /* SettingsView.swift */,
+				C76CDFAF2B2A77F800523216 /* ContentView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,6 +348,7 @@
 				DEVELOPMENT_TEAM = FP5KVVVJLP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "datadog-monitor/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "datadog-monitor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -367,6 +378,7 @@
 				DEVELOPMENT_TEAM = FP5KVVVJLP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "datadog-monitor/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "datadog-monitor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_LSUIElement = YES;
