@@ -13,6 +13,7 @@ let labelsWidth = windowWidth / 4
 
 struct SettingsView: View {
     @StateObject var appSettings: AppSettings
+    var popover: NSPopover
     
     var body: some View {
         Form {
@@ -28,13 +29,25 @@ struct SettingsView: View {
                         value: $appSettings.appKey,
                         label: "Application key")
                     NameRow(
+                        value: $appSettings.query,
+                        label: "query")
+                    NameRow(
                         value: $appSettings.interval,
                         label: "Interval")
                 }
                 HStack {
                     Spacer()
+                    Button("Cancel") {
+                        if popover.isShown {
+                            self.popover.performClose(nil)
+                        }
+                    }
                     Button("Save") {
                         appSettings.save()
+                        
+                        if popover.isShown {
+                            self.popover.performClose(nil)
+                        }
                     }
                 }
             }
@@ -43,9 +56,9 @@ struct SettingsView: View {
    }
 }
 
-#Preview {
-    SettingsView(appSettings: AppSettings())
-}
+//#Preview {
+//    SettingsView(appSettings: AppSettings())
+//}
 
 struct NameRow: View {
 

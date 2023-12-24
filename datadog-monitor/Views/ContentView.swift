@@ -10,33 +10,43 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var vm: MonitorListViewModel
         
-        init(vm: MonitorListViewModel) {
-            self._vm = StateObject(wrappedValue: vm)
+    init(vm: MonitorListViewModel) {
+        self._vm = StateObject(wrappedValue: vm)
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Monitors").padding()
+            
+            List(vm.monitors, id: \.symbol) { monitor in
+                HStack(alignment: .center, spacing: 0) {
+                    Text(monitor.description)
+                        .foregroundStyle(.white)
+                }.listRowBackground(backGroundColor(overall_state: monitor.overall_state))
+            }.task {
+                await vm.populateMonitors()
+            }
+            
+        }.frame(width: 300, height: 300)
+    }
+    
+    
+    func backGroundColor(overall_state: String) -> Color?
+    {
+        if (overall_state == "OK") {
+            return .green
         }
         
-        var body: some View {
-            VStack(alignment: .leading) {
-                Text("Monitors").padding()
-                
-                List(vm.monitors, id: \.symbol) { monitor in
-                    HStack(alignment: .center) {
-                        VStack(alignment: .leading) {
-                            
-                            Text(monitor.description)
-                                .opacity(0.4)
-                            Divider()
-                        }
-                       
-                        
-                    }
-                }.task {
-                    await vm.populateMonitors()
-                }
-                
-            }.frame(width: 300, height: 300)
+        if (overall_state == "Warn") {
+            return .yellow
         }
-    
-    
+        
+        if (overall_state == "Alert") {
+            return .red
+        }
+        
+        return .clear
+    }
 }
 
 #Preview {

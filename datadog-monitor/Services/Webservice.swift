@@ -13,8 +13,16 @@ enum NetworkError: Error {
 
 class Webservice {
     
-    func getMonitors(url: URL, ddApiKey: String, ddAppKey: String) async throws -> [Monitor] {
-        var request = URLRequest(url: url)
+    func getMonitors(url: URL, ddApiKey: String, ddAppKey: String, query: String) async throws -> [Monitor] {
+        var url2 = url
+        
+        if (query != "") {
+            var components = URLComponents(url: url, resolvingAgainstBaseURL: false);
+            components?.queryItems = [URLQueryItem(name: "query", value: query)]
+            url2 = components?.url ?? url
+        }
+        
+        var request = URLRequest(url: url2)
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue(ddApiKey, forHTTPHeaderField: "DD-API-KEY")
@@ -27,7 +35,9 @@ class Webservice {
             throw NetworkError.invalidResponse
         }
         
-        return try JSONDecoder().decode([Monitor].self, from: data)
+        let root = try JSONDecoder().decode(Root.self, from: data)
+        
+        return root.monitors
     }
     
 }

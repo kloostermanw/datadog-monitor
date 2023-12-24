@@ -9,10 +9,11 @@ import Foundation
 
 class AppSettings: ObservableObject
 {
-    @Published var url = "https://api.datadoghq.com/api/v1/monitor"
+    @Published var url = "https://api.datadoghq.com/api/v1/monitor/search"
     @Published var apiKey = ""
     @Published var appKey = ""
-    @Published var interval = "10"
+    @Published var interval = "60"
+    @Published var query = ""
         
     var settingsKey = "settings"
 }
@@ -22,11 +23,12 @@ extension AppSettings {
     {
         do {
             let objUserDefaults = UserDefaults(suiteName: "datadog-monitor.kloosterman.eu")
-            var values: [String : String] = ["interval": "10"]
+            var values: [String : String] = ["interval": "60"]
             values["interval"] = interval
             values["url"] = url
             values["apiKey"] = apiKey
             values["appKey"] = appKey
+            values["query"] = query
                     
             objUserDefaults?.setValue(values, forKey: settingsKey)
         }
@@ -37,10 +39,11 @@ extension AppSettings {
         let objUserDefaults = UserDefaults(suiteName: "datadog-monitor.kloosterman.eu")
         if objUserDefaults?.value(forKey: settingsKey) != nil {
             let values = objUserDefaults?.value(forKey: settingsKey) as! [String : String]
-            self.apiKey = values["apiKey"]!
-            self.appKey = values["appKey"]!
-            self.url = values["url"]!
-            self.interval = values["interval"]!
+            self.apiKey = values["apiKey"] ?? ""
+            self.appKey = values["appKey"] ?? ""
+            self.url = values["url"] ?? ""
+            self.interval = values["interval"] ?? "60"
+            self.query = values["query"] ?? ""
         }
     }
 }

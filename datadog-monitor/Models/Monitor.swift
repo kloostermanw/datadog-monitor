@@ -7,8 +7,13 @@
 
 import Foundation
 
+struct Root: Decodable {
+    let monitors: [Monitor]
+}
+
 struct Monitor: Decodable {
     let id: Int
     let name: String
-    let overall_state: String
+    let status: String
 }
+

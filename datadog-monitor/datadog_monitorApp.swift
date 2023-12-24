@@ -85,9 +85,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         appSettings.getSettings()
         
         self.popoverS = NSPopover()
-        self.popoverS.contentSize = NSSize(width: 400, height: 300)
+        self.popoverS.contentSize = NSSize(width: 600, height: 300)
         self.popoverS.behavior = .transient
-        self.popoverS.contentViewController = NSHostingController(rootView: SettingsView(appSettings: appSettings))
+        self.popoverS.contentViewController = NSHostingController(rootView: SettingsView(appSettings: appSettings, popover: self.popoverS))
         if let button = statusItem.button {
             if popover.isShown {
                 self.popover.performClose(nil)

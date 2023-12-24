@@ -30,6 +30,7 @@ class monitorJob
     var statusOK: Int = 0
     var statusNOK: Int = 0
     var statusData = StatusData(ok: 1, nok: 1)
+    let appSettings = AppSettings()
     
     init(statusItem: NSStatusItem) {
         self.statusItem = statusItem
@@ -39,11 +40,13 @@ class monitorJob
 
         statusItem.button?.addSubview(iconView)
         statusItem.button?.frame = iconView.frame
-        
     }
     
     func start() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 60) { [self] in
+        appSettings.getSettings()
+        var interval = DispatchTimeInterval.seconds(Int(appSettings.interval) ?? 60)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [self] in
                 doRegularWork()
             if run {
                 start()
@@ -66,7 +69,6 @@ class monitorJob
     func update() async -> Array<Int>
     {
         do {
-            let appSettings = AppSettings()
             appSettings.getSettings()
             if (
                 !(appSettings.apiKey ).isEmpty
@@ -76,7 +78,8 @@ class monitorJob
                 let monitors = try await Webservice().getMonitors(
                     url: URL(string: appSettings.url)!,
                     ddApiKey: appSettings.apiKey,
-                    ddAppKey: appSettings.appKey
+                    ddAppKey: appSettings.appKey,
+                    query: appSettings.query
                 )
                 self.monitors = monitors.map(MonitorViewModel.init)
                 
@@ -96,7 +99,7 @@ class monitorJob
         var NOK: Int = 0
         
         for monitor in self.monitors {
-            if (monitor.monitor.overall_state == "OK") {
+            if (monitor.monitor.status == "OK") {
                 OK += 1
             } else {
                 NOK += 1

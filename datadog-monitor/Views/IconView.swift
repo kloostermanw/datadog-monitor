@@ -16,12 +16,37 @@ struct IconView: View {
             HStack(spacing: 2) {
                 Text(String(statusData.ok))
                     .frame(width: 20,height: 20)
-                    .background(Color.green)
-                Text(String(statusData.nok))
-                    .frame(width: 20,height: 20)
-                    .background(Color.red)
+                    .background(okBackGroundColor())
+                if (showNok()) {
+                    Text(String(statusData.nok))
+                        .frame(width: 20,height: 20)
+                        .background(nokBackGroundColor())
+                }
             }
         }
+    }
+    
+    func okBackGroundColor() -> Color?
+    {
+        if (statusData.nok == 0) {
+            return nil
+        }
+        
+        return .green
+    }
+
+    func nokBackGroundColor() -> Color?
+    {
+        if (statusData.nok == 0) {
+            return nil
+        }
+        
+        return .red
+    }
+        
+    func showNok() -> Bool
+    {
+        return statusData.nok != 0
     }
 }
 

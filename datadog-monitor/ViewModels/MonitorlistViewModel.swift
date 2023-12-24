@@ -26,7 +26,8 @@ class MonitorListViewModel: ObservableObject {
                 let monitors = try await Webservice().getMonitors(
                     url: URL(string: appSettings.url)!,
                     ddApiKey: appSettings.apiKey,
-                    ddAppKey: appSettings.appKey
+                    ddAppKey: appSettings.appKey,
+                    query: appSettings.query
                 )
                 self.monitors = monitors.map(MonitorViewModel.init)
                 
@@ -49,8 +50,8 @@ struct MonitorViewModel {
         monitor.id
     }
     
-    var price: String {
-        monitor.overall_state
+    var overall_state: String {
+        monitor.status
     }
     
     var description: String {
