@@ -30,10 +30,10 @@ struct SettingsView: View {
                         label: "Application key")
                     NameRow(
                         value: $appSettings.query,
-                        label: "query")
+                        label: "Query")
                     NameRow(
                         value: $appSettings.interval,
-                        label: "Interval")
+                        label: "Interval (sec)")
                 }
                 HStack {
                     Spacer()
