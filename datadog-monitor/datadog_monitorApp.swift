@@ -57,7 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
         self.popover = NSPopover()
         self.popoverS = NSPopover()
-        self.popover.contentSize = NSSize(width: 300, height: 300)
+        self.popover.contentSize = NSSize(width: 400, height: 300)
         self.popover.behavior = .transient
         self.popover.contentViewController = NSHostingController(rootView: ContentView(vm: self.monitorListVM))
     }

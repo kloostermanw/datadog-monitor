@@ -20,14 +20,21 @@ struct ContentView: View {
             
             List(vm.monitors, id: \.symbol) { monitor in
                 HStack(alignment: .center, spacing: 0) {
-                    Text(monitor.description)
+                    Text(monitor.overall_state)
+                        .padding(2)
                         .foregroundStyle(.white)
-                }.listRowBackground(backGroundColor(overall_state: monitor.overall_state))
+                        .background(backGroundColor(overall_state: monitor.overall_state))
+                        .cornerRadius(4)
+                    
+                    Text(monitor.description)
+                        .padding(.leading, 10)
+                        
+                }
             }.task {
                 await vm.populateMonitors()
             }
             
-        }.frame(width: 300, height: 300)
+        }.frame(width: 400, height: 300)
     }
     
     
