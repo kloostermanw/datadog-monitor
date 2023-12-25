@@ -343,7 +343,7 @@
 				CODE_SIGN_ENTITLEMENTS = "datadog-monitor/datadog_monitor.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"datadog-monitor/Preview Content\"";
 				DEVELOPMENT_TEAM = FP5KVVVJLP;
 				ENABLE_PREVIEWS = YES;
@@ -373,7 +373,7 @@
 				CODE_SIGN_ENTITLEMENTS = "datadog-monitor/datadog_monitor.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"datadog-monitor/Preview Content\"";
 				DEVELOPMENT_TEAM = FP5KVVVJLP;
 				ENABLE_PREVIEWS = YES;
