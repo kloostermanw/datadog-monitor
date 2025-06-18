@@ -30,8 +30,6 @@ struct ContentView: View {
                         .padding(.leading, 10)
                         
                 }
-            }.task {
-                await vm.populateMonitors()
             }
             
         }.frame(width: 400, height: 300)

@@ -20,9 +20,10 @@ import Observation
     }
 }
 
-class monitorJob
+class MonitorJob
 {
     private var statusItem: NSStatusItem
+    private var monitorListVM: MonitorListViewModel?
     var monitors: [MonitorViewModel] = []
     var monitorTimer: Timer?
     var run: Bool = true
@@ -32,8 +33,9 @@ class monitorJob
     var statusData = StatusData(ok: 1, nok: 1)
     let appSettings = AppSettings()
     
-    init(statusItem: NSStatusItem) {
+    init(statusItem: NSStatusItem, monitorListVM: MonitorListViewModel? = nil) {
         self.statusItem = statusItem
+        self.monitorListVM = monitorListVM
 
         let iconView = NSHostingView(rootView: IconView(statusData: statusData))
         iconView.frame = NSRect(x: 0, y: 0, width: 40, height: 22)
@@ -44,7 +46,7 @@ class monitorJob
     
     func start() {
         appSettings.getSettings()
-        var interval = DispatchTimeInterval.seconds(Int(appSettings.interval) ?? 60)
+        let interval = DispatchTimeInterval.seconds(Int(appSettings.interval) ?? 60)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [self] in
                 doRegularWork()
@@ -61,8 +63,6 @@ class monitorJob
     func doRegularWork() {
         Task {
             result = await update()
-            print("-----> callFunc")
-            print(result)
         }
     }
     
@@ -82,6 +82,14 @@ class monitorJob
                     query: appSettings.query
                 )
                 self.monitors = monitors.map(MonitorViewModel.init)
+                
+                // Sort monitors by status priority (Alert, Warn, OK)
+                let sortedMonitors = self.monitors.sorted { $0.statusPriority < $1.statusPriority }
+                
+                // Update the MonitorListViewModel with the sorted data
+                Task { @MainActor in
+                    self.monitorListVM?.monitors = sortedMonitors
+                }
                 
                 return countStatus()
             }
