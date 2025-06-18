@@ -20,7 +20,7 @@ import Observation
     }
 }
 
-class monitorJob
+class MonitorJob
 {
     private var statusItem: NSStatusItem
     private var monitorListVM: MonitorListViewModel?

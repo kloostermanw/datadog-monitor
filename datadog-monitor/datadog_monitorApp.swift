@@ -13,8 +13,8 @@ struct datadog_monitorApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     
     var body: some Scene {
-        WindowGroup {
-//            ContentView(vm: MonitorListViewModel())
+        Settings {
+            EmptyView()
         }
     }
 }
@@ -26,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var popoverS: NSPopover!
     
     private var monitorListVM: MonitorListViewModel!
+    private var monitorJob: MonitorJob!
     
     @MainActor func applicationDidFinishLaunching(_ notification: Notification) {
         
@@ -33,9 +34,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
-        let Job = monitorJob(statusItem: statusItem, monitorListVM: self.monitorListVM)
-        Job.doRegularWork()
-        Job.start()
+        self.monitorJob = MonitorJob(statusItem: statusItem, monitorListVM: self.monitorListVM)
+        self.monitorJob.doRegularWork()
+        self.monitorJob.start()
                 
         let statusBarMenu = NSMenu(title: "Cap Status Bar Menu")
         statusItem.menu = statusBarMenu
@@ -43,6 +44,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         statusBarMenu.addItem(
             withTitle: "Show monitors",
             action: #selector(togglePopover),
+            keyEquivalent: "")
+        
+        statusBarMenu.addItem(
+            withTitle: "Refresh",
+            action: #selector(refreshData),
             keyEquivalent: "")
         
         statusBarMenu.addItem(
@@ -94,5 +100,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             }
             self.popoverS.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
         }
+    }
+    
+    @objc func refreshData() {
+        self.monitorJob.doRegularWork()
     }
 }
