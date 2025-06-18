@@ -65,9 +65,9 @@ struct MonitorViewModel {
         case "Warn":
             return 1
         case "OK":
-            return 2
-        default:
             return 3
+        default:
+            return 2
         }
     }
 }
