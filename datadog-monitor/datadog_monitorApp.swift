@@ -33,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
-        let Job = monitorJob(statusItem: statusItem)
+        let Job = monitorJob(statusItem: statusItem, monitorListVM: self.monitorListVM)
         Job.doRegularWork()
         Job.start()
                 

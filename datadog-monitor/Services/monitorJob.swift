@@ -23,6 +23,7 @@ import Observation
 class monitorJob
 {
     private var statusItem: NSStatusItem
+    private var monitorListVM: MonitorListViewModel?
     var monitors: [MonitorViewModel] = []
     var monitorTimer: Timer?
     var run: Bool = true
@@ -32,8 +33,9 @@ class monitorJob
     var statusData = StatusData(ok: 1, nok: 1)
     let appSettings = AppSettings()
     
-    init(statusItem: NSStatusItem) {
+    init(statusItem: NSStatusItem, monitorListVM: MonitorListViewModel? = nil) {
         self.statusItem = statusItem
+        self.monitorListVM = monitorListVM
 
         let iconView = NSHostingView(rootView: IconView(statusData: statusData))
         iconView.frame = NSRect(x: 0, y: 0, width: 40, height: 22)
@@ -82,6 +84,11 @@ class monitorJob
                     query: appSettings.query
                 )
                 self.monitors = monitors.map(MonitorViewModel.init)
+                
+                // Update the MonitorListViewModel with the same data
+                Task { @MainActor in
+                    self.monitorListVM?.monitors = self.monitors
+                }
                 
                 return countStatus()
             }
