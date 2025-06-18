@@ -57,4 +57,17 @@ struct MonitorViewModel {
     var description: String {
         monitor.name
     }
+    
+    var statusPriority: Int {
+        switch monitor.status {
+        case "Alert":
+            return 0
+        case "Warn":
+            return 1
+        case "OK":
+            return 2
+        default:
+            return 3
+        }
+    }
 }

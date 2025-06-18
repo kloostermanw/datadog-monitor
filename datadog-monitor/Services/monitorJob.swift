@@ -46,7 +46,7 @@ class monitorJob
     
     func start() {
         appSettings.getSettings()
-        var interval = DispatchTimeInterval.seconds(Int(appSettings.interval) ?? 60)
+        let interval = DispatchTimeInterval.seconds(Int(appSettings.interval) ?? 60)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [self] in
                 doRegularWork()
@@ -63,8 +63,6 @@ class monitorJob
     func doRegularWork() {
         Task {
             result = await update()
-            print("-----> callFunc")
-            print(result)
         }
     }
     
@@ -85,9 +83,12 @@ class monitorJob
                 )
                 self.monitors = monitors.map(MonitorViewModel.init)
                 
-                // Update the MonitorListViewModel with the same data
+                // Sort monitors by status priority (Alert, Warn, OK)
+                let sortedMonitors = self.monitors.sorted { $0.statusPriority < $1.statusPriority }
+                
+                // Update the MonitorListViewModel with the sorted data
                 Task { @MainActor in
-                    self.monitorListVM?.monitors = self.monitors
+                    self.monitorListVM?.monitors = sortedMonitors
                 }
                 
                 return countStatus()
