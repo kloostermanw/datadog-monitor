@@ -23,8 +23,12 @@ class MonitorListViewModel: ObservableObject {
                 && !(appSettings.appKey ).isEmpty
                 && !(appSettings.url ).isEmpty
             ) {
+                guard let url = URL(string: appSettings.url) else {
+                    print("Invalid URL: \(appSettings.url)")
+                    return
+                }
                 let monitors = try await Webservice().getMonitors(
-                    url: URL(string: appSettings.url)!,
+                    url: url,
                     ddApiKey: appSettings.apiKey,
                     ddAppKey: appSettings.appKey,
                     query: appSettings.query

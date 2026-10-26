@@ -19,6 +19,7 @@ struct datadog_monitorApp: App {
     }
 }
 
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     
     private var statusItem: NSStatusItem!
@@ -28,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var monitorListVM: MonitorListViewModel!
     private var monitorJob: MonitorJob!
     
-    @MainActor func applicationDidFinishLaunching(_ notification: Notification) {
+    func applicationDidFinishLaunching(_ notification: Notification) {
         
         self.monitorListVM = MonitorListViewModel()
         

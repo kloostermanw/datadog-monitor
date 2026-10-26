@@ -37,8 +37,7 @@ extension AppSettings {
     func getSettings()
     {
         let objUserDefaults = UserDefaults(suiteName: "datadog-monitor.kloosterman.eu")
-        if objUserDefaults?.value(forKey: settingsKey) != nil {
-            let values = objUserDefaults?.value(forKey: settingsKey) as! [String : String]
+        if let values = objUserDefaults?.value(forKey: settingsKey) as? [String : String] {
             self.apiKey = values["apiKey"] ?? ""
             self.appKey = values["appKey"] ?? ""
             self.url = values["url"] ?? ""

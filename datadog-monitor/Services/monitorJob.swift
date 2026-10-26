@@ -20,18 +20,16 @@ import Observation
     }
 }
 
+@MainActor
 class MonitorJob
 {
     private var statusItem: NSStatusItem
     private var monitorListVM: MonitorListViewModel?
     var monitors: [MonitorViewModel] = []
-    var monitorTimer: Timer?
     var run: Bool = true
-    var result: Array<Any> = []
-    var statusOK: Int = 0
-    var statusNOK: Int = 0
     var statusData = StatusData(ok: 1, nok: 1)
     let appSettings = AppSettings()
+    private var pollTask: Task<Void, Never>?
     
     init(statusItem: NSStatusItem, monitorListVM: MonitorListViewModel? = nil) {
         self.statusItem = statusItem
@@ -45,28 +43,31 @@ class MonitorJob
     }
     
     func start() {
-        appSettings.getSettings()
-        let interval = DispatchTimeInterval.seconds(Int(appSettings.interval) ?? 60)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [self] in
-                doRegularWork()
-            if run {
-                start()
+        pollTask?.cancel()
+        pollTask = Task {
+            while run, !Task.isCancelled {
+                appSettings.getSettings()
+                let seconds = Int(appSettings.interval) ?? 60
+                try? await Task.sleep(nanoseconds: UInt64(seconds) * 1_000_000_000)
+                guard run, !Task.isCancelled else { break }
+                await update()
             }
         }
     }
     
     func stop() {
         run = false
+        pollTask?.cancel()
+        pollTask = nil
     }
     
     func doRegularWork() {
         Task {
-            result = await update()
+            await update()
         }
     }
     
-    func update() async -> Array<Int>
+    func update() async
     {
         do {
             appSettings.getSettings()
@@ -75,8 +76,12 @@ class MonitorJob
                 && !(appSettings.appKey ).isEmpty
                 && !(appSettings.url ).isEmpty
             ) {
+                guard let url = URL(string: appSettings.url) else {
+                    print("Invalid URL: \(appSettings.url)")
+                    return
+                }
                 let monitors = try await Webservice().getMonitors(
-                    url: URL(string: appSettings.url)!,
+                    url: url,
                     ddApiKey: appSettings.apiKey,
                     ddAppKey: appSettings.appKey,
                     query: appSettings.query
@@ -87,21 +92,17 @@ class MonitorJob
                 let sortedMonitors = self.monitors.sorted { $0.statusPriority < $1.statusPriority }
                 
                 // Update the MonitorListViewModel with the sorted data
-                Task { @MainActor in
-                    self.monitorListVM?.monitors = sortedMonitors
-                }
+                self.monitorListVM?.monitors = sortedMonitors
                 
-                return countStatus()
+                countStatus()
             }
         }
         catch {
             print(error)
         }
-        
-        return [0,0]
     }
                 
-    func countStatus() -> Array<Int>
+    func countStatus()
     {
         var OK: Int = 0
         var NOK: Int = 0
@@ -116,7 +117,5 @@ class MonitorJob
         
         statusData.ok = OK
         statusData.nok = NOK
-        
-        return [OK, NOK]
     }
 }
