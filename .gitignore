@@ -1,1 +1,5 @@
 datadog-monitor/Utils/Constants.swift
+
+# release packaging output (scripts/make-dmg.sh)
+build-release/
+*.dmg

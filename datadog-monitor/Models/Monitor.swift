@@ -9,6 +9,18 @@ import Foundation
 
 struct Root: Decodable {
     let monitors: [Monitor]
+    let metadata: SearchMetadata?
+}
+
+/// Paging information returned by the monitor search endpoint.
+struct SearchMetadata: Decodable {
+    let page: Int
+    let pageCount: Int
+
+    enum CodingKeys: String, CodingKey {
+        case page
+        case pageCount = "page_count"
+    }
 }
 
 struct Monitor: Decodable {
@@ -16,4 +28,3 @@ struct Monitor: Decodable {
     let name: String
     let status: String
 }
-
